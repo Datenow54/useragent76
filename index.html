@@ -1,22 +1,293 @@
-function generateRealisticUA() {
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages সেটআপ গাইড</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  const iosVersions = ["15_7_9", "16_0_2", "16_5_1", "17_0_3"];
-  const fbVersions = ["540.0.0.0.0", "544.0.0.32.278", "550.1.0.0.0", "560.0.0.0.0"];
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background: linear-gradient(135deg, #f6f8fa 0%, #e1e4e8 100%);
+            padding: 20px;
+        }
 
-  const devices = ["iPhone13,3", "iPhone14,2", "iPhone15,3"];
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
 
-  function pick(arr){
-    return arr[Math.floor(Math.random()*arr.length)];
-  }
+        /* GitHub Style Header */
+        .github-header {
+            background: #24292e;
+            color: white;
+            padding: 30px 40px;
+            border-bottom: 1px solid #e1e4e8;
+        }
 
-  const ios = pick(iosVersions);
-  const fb = pick(fbVersions);
-  const device = pick(devices);
+        .github-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-  const ua =
-`Mozilla/5.0 (iPhone; CPU iPhone OS ${ios} like Mac OS X)
-AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20A380
-[FBAN/FBIOS;FBAV/${fb};FBDV/${device};FBSV/${ios.replaceAll("_",".")};FBLC/en_US]`;
+        .github-header h1::before {
+            content: "📘";
+            font-size: 1.2em;
+        }
 
-  return ua;
-}
+        .github-header p {
+            color: #9ea7b3;
+            font-size: 1.1em;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 40px;
+        }
+
+        /* Info Cards */
+        .info-card {
+            background: #f6f8fa;
+            border-left: 4px solid #2ea44f;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-card.warning {
+            border-left-color: #f66a0a;
+            background: #fff5eb;
+        }
+
+        .info-card h3 {
+            margin-bottom: 12px;
+            color: #24292e;
+        }
+
+        /* Steps */
+        .step {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #eaecef;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #2ea44f;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .step h2 {
+            display: inline-block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #0366d6;
+        }
+
+        .step pre {
+            background: #24292e;
+            color: #e1e4e8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 15px 0;
+        }
+
+        .step code {
+            background: #f6f8fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d73a49;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2ea44f;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #22863a;
+        }
+
+        .tip {
+            background: #f1f8ff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #0366d6;
+        }
+
+        .tip strong {
+            color: #0366d6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f6f8fa;
+            padding: 20px 40px;
+            text-align: center;
+            border-top: 1px solid #e1e4e8;
+            color: #586069;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            .github-header {
+                padding: 20px;
+            }
+            .step h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="github-header">
+            <h1>GitHub Pages সেটআপ গাইড</h1>
+            <p>বিনামূল্যে হোস্টিং - শুধু HTML, CSS, JavaScript ব্যবহার করে ওয়েবসাইট তৈরি করুন 🚀</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Info Card -->
+            <div class="info-card">
+                <h3>✨ GitHub Pages কি?</h3>
+                <p>GitHub Pages হল একটি ফ্রি হোস্টিং সার্ভিস যা আপনার GitHub রিপোজিটরি থেকে সরাসরি স্ট্যাটিক ওয়েবসাইট পাবলিশ করে। পোর্টফোলিও, প্রজেক্ট ডকুমেন্টেশন বা পার্সোনাল ব্লগের জন্য পারফেক্ট! [citation:6][citation:8]</p>
+            </div>
+
+            <div class="info-card warning">
+                <h3>⚠️ আগে জানা জরুরী</h3>
+                <p><strong>পাবলিক রিপোজিটরি:</strong> ফ্রি প্ল্যানে রিপোজিটরি পাবলিক থাকতে হবে।<br>
+                <strong>স্ট্যাটিক সাইট:</strong> শুধু HTML, CSS, JS সাপোর্ট করে (PHP বা ডাটাবেস থাকবে না) [citation:8]।<br>
+                <strong>ইনডেক্স ফাইল:</strong> হোমপেজের নাম <code>index.html</code> রাখতে হবে [citation:3][citation:6]।</p>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="step">
+                <span class="step-number">১</span>
+                <h2>GitHub একাউন্ট ও রিপোজিটরি তৈরি</h2>
+                <p>প্রথমে একটি GitHub একাউন্ট খুলুন (যদি না থাকে)। এরপর:</p>
+                <ul style="margin: 15px 0 15px 40px;">
+                    <li>লগইন করে ডান পাশের <strong>"+"</strong> আইকনে ক্লিক করুন</li>
+                    <li><strong>"New repository"</strong> সিলেক্ট করুন [citation:6]</li>
+                    <li>Repository Name: <code>আপনার-ইউজারনাম.github.io</code> (উদাহরণ: <code>sakib.github.io</code>)</li>
+                    <li><strong>Public</strong> সিলেক্ট করে <strong>"Create repository"</strong> ক্লিক করুন [citation:8]</li>
+                </ul>
+                <div class="tip">
+                    <strong>💡 টিপ:</strong> বিশেষ রিপোজিটরি নাম <code>username.github.io</code> ব্যবহার করলে সাইটটি সরাসরি <strong>https://username.github.io</strong> এ ওপেন হবে [citation:3][citation:9]!
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <span class="step-number">২</span>
+                <h2>HTML ফাইল আপলোড করা</h2>
+                <p>রিপোজিটরিতে আপনার ওয়েবসাইটের ফাইল যোগ করুন।最简单的方法是:</p>
+                <ul style="margin: 15px 0 15px 40px;">
+                    <li>রিপোজিটরির ভিতরে <strong>"Add file"</strong> → <strong>"Upload files"</strong> ক্লিক করুন</li>
+                    <li>আপনার তৈরি করা <code>index.html</code> ফাইল ড্র্যাগ করুন [citation:8]</li>
+                    <li>নিচে <strong>"Commit changes"</strong> বাটনে ক্লিক করুন</li>
+                </ul>
+                <pre>&lt;!-- একটি মিনিমাম HTML উদাহরণ --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;মাই ফার্স্ট সাইট&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;হ্যালো ওয়ার্ল্ড!&lt;/h1&gt;
+    &lt;p&gt;এটা আমার GitHub Pages সাইট।&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <span class="step-number">৩</span>
+                <h2>GitHub Pages অ্যাক্টিভেট করা</h2>
+                <p>রিপোজিটরির সেটিংস থেকে GitHub Pages চালু করতে হবে:</p>
+                <ul style="margin: 15px 0 15px 40px;">
+                    <li>রিপোজিটরির <strong>Settings</strong> ট্যাবে যান [citation:5][citation:7]</li>
+                    <li>বাম সাইডবার থেকে <strong>Pages</strong> মেনুতে ক্লিক করুন [citation:3]</li>
+                    <li><strong>Branch</strong> অপশনে <code>main</code> সিলেক্ট করুন</li>
+                    <li><strong>Folder</strong> এ <code>/(root)</code> সিলেক্ট করে <strong>Save</strong> ক্লিক করুন [citation:3]</li>
+                </ul>
+                <div class="tip">
+                    <strong>⏱️ সময়:</strong> সেভ করার পর ১-২ মিনিট অপেক্ষা করুন। রিপোজিটরি রিলোড দিলে উপরে একটি নোটিশ দেখাবে: <strong>"Your site is published at https://username.github.io"</strong> [citation:6]
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+                <span class="step-number">৪</span>
+                <h2>সাইট ভিজিট করা ও আপডেট করা</h2>
+                <p>এবার আপনার ব্রাউজারে <code>https://username.github.io</code> ওপেন করুন (username আপনার ইউজারনেম দিয়ে পরিবর্তন করে)।</p>
+                <p><strong>আপডেট প্রসেস:</strong> নতুন HTML/CSS ফাইল আপলোড করলেও GitHub Pages স্বয়ংক্রিয়ভাবে আপডেট হবে। মাঝে মাঝে ২-৩ মিনিট লেগে যেতে পারে [citation:1][citation:8]।</p>
+                <div class="tip">
+                    <strong>🔄 বারবার আপডেটের নিয়ম:</strong> লোকাল ফাইল এডিট করে git commands ব্যবহার করতে চাইলে:
+                    <pre style="margin-top: 10px;">git add --all
+git commit -m "আপডেটের কারণ লিখুন"
+git push</pre>
+                    <small>উপরের কমান্ডগুলো আপনার কম্পিউটারে Git ইন্সটল করা থাকবে। না থাকলে সরাসরি GitHub ওয়েবসাইট থেকে ফাইল আপলোড দিতে পারেন [citation:6][citation:8]।</small>
+                </div>
+            </div>
+
+            <!-- Bonus Section -->
+            <div class="info-card">
+                <h3>🎨 থিম ও কাস্টম ডোমেইন (অপশনাল)</h3>
+                <p><strong>থিম সিলেক্ট:</strong> Settings → Pages → Theme Chooser থেকে বিল্ট-ইন থিম সিলেক্ট করে দিতে পারেন [citation:9]।<br>
+                <strong>কাস্টম ডোমেইন:</strong> আপনার নিজের ডোমেইন (যেমন <code>myname.com</code>) কানেক্ট করতে চাইলে, সেটা সম্ভব। এর জন্য রেজিস্ট্রার থেকে ডোমেইন কিনতে হবে [citation:1][citation:2]।</p>
+            </div>
+
+            <a href="https://github.com/new" target="_blank" class="btn">🚀 এখনই রিপোজিটরি তৈরি করুন</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with ❤️ using GitHub Pages | সম্পূর্ণ ফ্রি ওপেন সোর্স হোস্টিং প্ল্যাটফর্ম</p>
+            <p style="margin-top: 8px;">🔗 বিস্তারিত জানতে: <a href="https://docs.github.com/en/pages" style="color: #0366d6;">GitHub Pages Official Docs</a></p>
+        </div>
+    </div>
+</body>
+</html>
