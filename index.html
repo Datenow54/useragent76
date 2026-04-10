@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🔥 PRO User-Agent Generator</title>
+
+<style>
+body {
+  background: #0d0d0d;
+  color: #00ffcc;
+  font-family: monospace;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px;
+  margin: 20px;
+  background: #00ffcc;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+textarea {
+  width: 95%;
+  height: 180px;
+  margin-top: 20px;
+  background: #111;
+  color: #0f0;
+  padding: 10px;
+}
+
+select {
+  padding: 10px;
+  margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚀 PRO User-Agent Generator (All-in-One)</h1>
+
+<select id="device">
+  <option value="random">Random Device</option>
+  <option value="android">Android</option>
+  <option value="ios">iOS (iPhone)</option>
+</select>
+
+<select id="app">
+  <option value="random">Random App</option>
+  <option value="chrome">Chrome</option>
+  <option value="facebook">Facebook</option>
+  <option value="instagram">Instagram</option>
+  <option value="reddit">Reddit</option>
+  <option value="tiktok">TikTok</option>
+</select>
+
+<br>
+
+<button onclick="generateUA()">Generate Smart UA</button>
+
+<textarea id="output" placeholder="Generated User-Agent will appear here..."></textarea>
+
+<script>
+// ===== DEVICE DATABASE =====
+const devices = [
+  {brand:"Samsung", model:"SM-G991B", os:"Android", dpi:"420dpi", res:"1080x2400"},
+  {brand:"Xiaomi", model:"Mi 11", os:"Android", dpi:"440dpi", res:"1440x3200"},
+  {brand:"Google", model:"Pixel 7", os:"Android", dpi:"420dpi", res:"1080x2400"},
+  {brand:"Apple", model:"iPhone13,3", os:"iOS", res:"1170x2532"},
+  {brand:"Apple", model:"iPhone14,2", os:"iOS", res:"1179x2556"}
+];
+
+// ===== SOCIAL APPS =====
+const apps = {
+  facebook: {
+    android: "FBAN/FB4A;FBAV/{v}.0.0.0",
+    ios: "FBAN/FBIOS;FBAV/{v}.0.0.0"
+  },
+  instagram: {
+    android: "Instagram {v}.0.0.0 Android",
+    ios: "Instagram {v}.0.0.0 iOS"
+  },
+  reddit: {
+    android: "Reddit/{v}.0.0.0",
+    ios: "Reddit/{v}.0.0.0"
+  },
+  tiktok: {
+    android: "com.zhiliaoapp.musically/{v}",
+    ios: "TikTok/{v}.0.0"
+  }
+};
+
+// ===== UTILS =====
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// ===== GENERATOR =====
+function generateUA() {
+  let deviceType = document.getElementById("device").value;
+  let appType = document.getElementById("app").value;
+
+  let device = pick(devices);
+
+  // filter device
+  if (deviceType !== "random") {
+    device = pick(devices.filter(d => d.os.toLowerCase() === deviceType));
+  }
+
+  let chrome = rand(133, 146);
+  let version = rand(200, 500);
+
+  let ua = "";
+
+  // ANDROID
+  if (device.os === "Android") {
+    ua = `Mozilla/5.0 (Linux; Android ${rand(10,14)}; ${device.model}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chrome}.0.0.0 Mobile Safari/537.36`;
+
+    if (appType !== "chrome") {
+      let appName = appType === "random" ? pick(Object.keys(apps)) : appType;
+      ua += " [" + apps[appName].android.replace("{v}", version) + "]";
+    }
+  }
+
+  // IOS
+  if (device.os === "iOS") {
+    ua = `Mozilla/5.0 (iPhone; CPU iPhone OS ${rand(14,17)}_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`;
+
+    if (appType !== "chrome") {
+      let appName = appType === "random" ? pick(Object.keys(apps)) : appType;
+      ua += " [" + apps[appName].ios.replace("{v}", version) + "]";
+    }
+  }
+
+  document.getElementById("output").value = ua;
+}
+</script>
+
+</body>
+</html>
